@@ -1,0 +1,390 @@
+\documentclass[10pt]{article}
+\author{Haohan Chen \thanks{haohan.chen@duke.edu}}
+\title{A Short Manual of \LaTeX}
+\date{August 13, 2015}
+
+\linespread{1.2}
+
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[margin = 2.5cm, top = 3cm]{geometry}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage[urlcolor=blue]{hyperref}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{A Short Manual of \LaTeX}
+\chead{Political Science Math Camp 2015}
+\rhead{Haohan Chen}
+
+\usepackage{listings,color}
+\definecolor{verbgray}{gray}{0.9}
+
+\lstnewenvironment{code}{%
+  \lstset{backgroundcolor=\color{verbgray},
+  frame=single,
+  framerule=0pt,
+  basicstyle=\ttfamily,
+  columns=fullflexible}}{}
+
+\definecolor{shadecolor}{rgb}{.9, .9, .9}
+
+
+\begin{document}
+
+
+\maketitle
+
+In this short manual, I will summarize all \LaTeX commands that we practiced in our workshop. Hope it serves as a quick reference when you start working on it.
+
+\section{To Write an Article: Everything you need to get started...}
+The following code should cover most of the functions we need from \LaTeX. Feel free to copy from the following template before you are fully familiar with it. 
+
+\begin{longtable}{p{7cm} | p{9cm} }
+	%\centering
+%	\begin{tabular}{p{7cm} | p{9cm} }
+		\multicolumn{2}{l}{} \\
+		\verb|\documentclass[11pt, letter]{article}| & Define document class as 'article' and set the size of the text and type of the paper\\
+		& \\
+		\verb|\usepackage{graphicx}| & You need it if you include figures. \\
+		\verb|\usepackage{natbib}|	& This package creates nice citations and bibliography for you \\
+		\verb|\usepackage{amsmath}| & You need it if you type maths. \\
+		\verb|\usepackage{hyperref}| & With this package, your table of contents, list of figures, list of tables, citations, reference to tables (using \verb|\ref|) will have hyperlinks directing readers to those contents respectively. \\
+		& \\
+		\verb|\usepackage[margin=2.5cm]{geometry}| & You may set your page margin here. If you want to further customize, type, for instance, \verb|[left=2cm, right=2cm, top=2.5cm, bottom=2.5cm]| in place of  \verb|[margin = 2.5cm]|\\
+		
+		\verb|\usepackage{times}| & Use \textit{Times} font. \\
+
+		\verb|\linespread{1.5}| & Spacing between lines \\
+		& \\
+
+		\verb|\author{Your Name \thanks{Duke} }| & Print author. Anything after \verb|\thanks| appear as footnote on the page where you print your title.\\ 
+		\verb|\title{Your Title}| & The title of your article \\ 
+		\verb|\date{}| & If you do NOT want date printed, put nothing between $\{\}$. If you would like to print the date of today, put \verb|\today| between $\{\}$, or simply do not include this command. \\
+		& \\
+		\verb|\begin{document}| & This marks the start of your document. Anything before this sets up the document, while everything between this and \verb|\end{document}| will appear in the final product.  \\
+		\verb|\maketitle| &  Tell \LaTeX to print the title, author and date here. \\
+		\verb|\newpage| & Start the following in a new page. You can put it anywhere you wish to break the page in your document.\\
+		\verb|\tableofcontents| & Make a table of content \\
+		\verb|\listoffigures| & Make a list of figures \\
+		\verb|\listoftables| & Make a list of tables \\
+		& \\
+		\verb|\section{...}| & Start a new section. Use \verb|\section*{}| if you do not want the section to be numbered. The sign '*' serves the same function for many others command in \LaTeX. \\
+		\verb|\subsection{...}| & \\
+		\verb|\paragraph{}| & Start a paragraph. I use this when I need to add a little title for a paragraph. Otherwise I will simply start typing the content right away. Note that a blank line starts a new paragraph.\\
+		& \\
+		\rowcolor[gray]{.95} \verb|\begin{itemize}| & Write bullet points \\
+		\rowcolor[gray]{.95} \verb|    | \verb*|\item | YOUR TEXT \verb|\\| &  The first item... Make sure to leave a space between \verb|\item| and your text so that \LaTeX can recognize the start of each point. Also don't forget the end-of-paragraph sign \verb|\\| before you start your next point.\\
+		\rowcolor[gray]{.95} \verb|    | \verb*|\item | YOUR TEXT \verb|\\| & \\
+		\rowcolor[gray]{.95} \verb|    ...| & \\
+		\rowcolor[gray]{.95} \verb|\end{itemize}| & \textbf{Note: }If you want your bullet points number, replace \verb|itemize| with \verb|enumerate|, at the beginning and the end of the command. If you want a nested bullet point, you can put \verb|\begin{itemize}...\end{itemize}| inside a bullet pint environment. \\
+		& \\
+		\verb|\begin{figure}[hptp!]| & \textbf{FIGURE. }Adding a figure into your document. What's inside [..] tells \LaTeX\ where to place the figure. \verb|h|: here; \verb|p|: in a separate page with other figures/ tables; \verb|t|: top; \verb|b|: bottom; \verb|!|: tells \LaTeX to try HARD to over the default setting (i.e. \verb|tbp|) with your preferred setting indicated here. Try not to use description such as 'the figure above' because \LaTeX is very likely to rearrange the placement of your figures as you edit the document. \\
+		\verb|  \centering| & Put the figure in the center\\
+		\verb|  \caption{Title}| & The title of your figure\\
+		\verb|  \label{fig1}| & Create a reference point so that you can refer to the figure in your text using \verb|\ref{}|. Here I set the reference name as \verb|fig1|. You may use whatever name you want, as long as one figure has a unique reference name.\\
+		\verb|  \includegraphics[width=4in]{"name"}| & Set up the figure. You can set the width and height of the figure: \verb|[width=4in, height=4in]|. If you include only one of them (as I do on the left), the figure will be re-sized proportionally. You use \verb|{"name"}| to tell \LaTeX\ the name of the image file, which you should put in the same folder as your \verb|.tex| file. Caution: Use simple names for the source files of figures. Otherwise there might be strange errors.\\
+		\verb|\end{figure}| & \\
+		& \\ 
+		\rowcolor[gray]{.95}
+		\begin{minipage}{7cm}
+			\begin{verbatim}
+						\begin{table}[hptb!]
+						  \centering
+						  \caption{Your Title}
+						  \label{tab1}
+						  \begin{tabular}{|l|c r|}
+						    \hline \hline
+						    11 & 12 & 13 \\
+						    21 & 22 & 23 \\
+						    31 & 32 & 33 \\
+						    \hline
+						    \multicolumn{2}{|l|}{41-2} & 43\\
+						    \hline
+						    41 & \multicolumn{2}{|r|}{42-3}\\
+						    \hline
+						    \multicolumn{3}{|c|}{51-3}\\
+						    \hline \hline 
+						  \end{tabular}
+						\end{table}
+			\end{verbatim}
+		\end{minipage}
+		&  
+		\begin{minipage}{9cm}
+				\vspace{2mm}
+				The code on the left gives you a table that appears as the following:
+				\small
+				\begin{center}
+						Table 1: Your Title \\
+						\begin{tabular}{| l | c  r |}
+							\hline \hline
+							11 & 12 & 13 \\
+							21 & 22 & 23 \\
+							31 & 32 & 33 \\
+							\hline
+							\multicolumn{2}{| l |}{41-2} &  43 \\
+							\hline
+							41 & \multicolumn{2}{| r |}{42-3} \\
+							\hline
+							\multicolumn{3}{| c |}{51-3} \\
+							\hline \hline 
+						\end{tabular} \\
+						\vspace{3mm}
+				\end{center}
+				\normalsize
+				Some highlight: 
+				\begin{itemize}
+					\item At the first line, '$\mid$' Tells \LaTeX\ whether to add border between two columns or not. You can see border between the first and the second column but no border between the second and the third column here. \verb|l,c,r| tells \LaTeX\ to align all cell of a column to the left, center or right respectively.
+					\item '\&' moves from one cell from another cell within one row
+					\item ' \verb|\\|' moves from one row to next row
+					\item To add border between two rows, add \verb|\hline| in between (after \verb|\\| of the previous row)
+					\item To merge columns, use \verb|\multicolumn|. For instance \verb|\multicolumn{3}{c}{51-3}| means: merging 3 cells, aligning to the center in this merged cell, the text in the cell being "51-3". Again, '$\mid$' adds borders
+				\end{itemize}
+				Play with the settings and you will see how it works! \\
+		\end{minipage} \\
+		& \\
+		\verb|...see Figure \ref{fig1}| & \textbf{Referring to tables or figures in your text.}You may refer to the figure that you label. Note that the label of the figure does not have to be defined before you call it with \verb|\ref|. Personally I think using the reference system (i.e. \verb|\label| and \verb|\ref|) instead of directly typing in the number of the table/ figures help managing your work more efficiently. \\
+		\verb|...see Table \ref{tab1}| & Same as above. \\
+		& \\
+		\rowcolor[gray]{.95} \verb|...we have the equation $a+b=c$...| & \textbf{MATHS. }When you type math in your main text, DON'T FORGET to use '\$' to start AND end your equations/ formulas! Remember to check that when you get error reports. \\
+		\rowcolor[gray]{.95} & \\
+		\rowcolor[gray]{.95} \begin{minipage}[t]{7cm}
+			\begin{verbatim}
+				\begin{equation}
+				  (a + b) (c + d) = e
+				\end{equation}
+			\end{verbatim}
+		\end{minipage} & You need this when you enter a single equation. Using \verb|{equation*}| get rid of the numbers of after equations. \\
+		\rowcolor[gray]{.95} & \\
+		\rowcolor[gray]{.95} \begin{minipage}[t]{7cm}
+			\begin{verbatim}
+				\begin{align}
+				  y  = x^2 & + 3x + 4 \\
+				  & = a + b \\
+				  & = 10	
+				\end{align}
+			\end{verbatim}
+		\end{minipage} & You need this when you enter a group of equations and want them aligned to certain place. Here they align to the equal sign. \\		
+		\rowcolor[gray]{.95} & \\
+		\rowcolor[gray]{.95} \begin{minipage}[t]{7cm}
+			\begin{verbatim}
+			\begin{gather}
+			  (x + 3)(y - 1)  = 0 \\
+			  xy - x + 3y - 3 = 0 \\
+			  xy - x + 3y =3
+			\end{gather}
+			\end{verbatim}
+		\end{minipage} & You need this when you enter a group of equations and want them aligned to the center. \\			
+		\rowcolor[gray]{.95} & \\
+		\begin{minipage}{7cm}
+			\begin{verbatim}
+				\citet{...}
+				\citeauthor{...}
+				\citep{...}
+				\citep[postfix][prefix]{keylist}
+			\end{verbatim}
+		\end{minipage} &
+		\begin{minipage}{9cm}
+			\textbf{CITATION AND BIBLIOGRAPHY. }Before you start to cite in your document, please do the following:
+			\begin{enumerate}
+				\item Create a NEW file in \LaTeX\ to store your bibliography information. Save it into the same folder as your \verb|.tex| file. You may give if whatever name as you wish, but the extension should be \verb|.bib|. For instance, in my example, The name is \verb|ref.bib|. 
+				\item Add bibliography information to the \verb|.bib| file you have created and saved. I strongly recommend using Google Scholar to collect such information (but make sure to check for occasional mistakes). How to do it? Under your search result, click "cite". Next, at the bottom left of the pop-up window, click "Import to BibTeX". Then, select-all and copy the information to your\verb|.bib| file. Last, you should save it, before which it will not appear in the document that cites it.
+				\item Cite in the document using the command on the left. Note that what you put in \verb|{..}| should be the \textit{reference name} of the entry. Here is an example:
+				\begin{footnotesize}					
+					\begin{verbatim}
+						@article{acemoglu2006facto,
+						  title={De facto political power and institutional...},
+						  author={Acemoglu, Daron and Robinson, James A},
+						  journal={The American economic review},
+						  pages={325--330},
+						  year={2006},
+						  publisher={JSTOR}
+						}
+					\end{verbatim}
+				\end{footnotesize}
+				Here the reference name of this work is '\verb|acemoglu2006facto|'. That is, to cite this work, you should enter, for instance, \verb|\citet{acemoglu2006facto}|.
+				
+			\end{enumerate}
+		\end{minipage} \\
+		
+		& \\
+		\verb|\bibliographystyle{chicago}| & At the end of your document, you may produce your bibliography. This line first sets the reference style as 'Chicago'. \\
+		\verb|\bibliography{ref}| & This command link your document with a bibliography file named '\verb|ref.bib|', which, as is explained above, you have created in the same folder as your \verb|.tex| file. \\
+
+		
+		\rowcolor[gray]{.95} \verb|\end{document}| & End the document. Without this at the end, \LaTeX\ will not compile. Sometimes you may accidentally enter stuff after \verb|\end{document}|, in which case no error will be reported but you lose all information after this point. Be careful!
+%	\end{tabular}
+\end{longtable}
+
+\newpage
+
+
+
+\section{To Write a Presentation}
+
+
+\begin{longtable}{p{7cm} | p{9cm} }
+	\begin{minipage}{7cm}
+		\small
+		\begin{verbatim}
+			\documentclass{beamer}
+			\usetheme{default}
+			
+			\title{Title of the Presentation}
+			\subtitle{Subtitle}
+			\author{Your Name}
+			\institute{Duke University}
+			\date{\today}
+			
+			\begin{document}
+			
+			\maketitle
+			
+			\section{Name of 1st Section}
+			
+			\begin{frame}
+			  \frametitle{Name of 1st frame}
+			  \framesubtitle{Subtitle of 1st frame}
+			  \begin{itemize}
+			    \item First argument
+			    \pause
+			    \item Second argument
+			    \pause
+			    \item Third argument
+			    \pause
+			  \end{itemize}
+				
+			  \begin{block}{This is a block}
+			    Additional information					
+			    Additional information
+			  \end{block}
+			\end{frame}
+			
+			\section{Name of 2nd Section}
+			
+			\begin{frame}
+			  \begin{figure}
+			    \caption{...}
+			    \label{fig}
+			    \includegraphics[width = 4in]{...}
+			  \end{figure}
+			\end{frame}
+			
+			\end{document}
+		\end{verbatim} 
+		\end{minipage}&
+		\begin{minipage}{9cm}
+			If you pay close attention to the previous part, the code on the left is very likely to be easily understandable. Below are several highlights:
+			\begin{itemize}
+				\item \verb|beamer| is the document class that is most commonly used for presentations. If you use \verb|\pause| in your pages and you would like to generate handouts, simply substitute \verb|\documentclass{beamer}| by \verb|\documentclass[handout]{beamer}|. 
+				\item Available themes include (to be put after \verb|\usetheme|, which is \verb|defult| in my example): \textit{default, Antibes, Bergen, Berkeley, Berlin, Copenhagen, Darmstadt, Dresden, Frankfurt, Goettingen, Hannover, Ilmenau, JuanLesPins, Luebeck, Madrid, Malmoe, Marburg, Montpellier, PaloAlto, Pittsburgh, Rochester, Singapore, Szeged, Warsaw, boxes}. You can of course search and download other themes from external sources.
+				\item Names of sections defined by \verb|\section{}| will appear in the navigation bar (only applicable when using themes that show navigation bar, for instance \verb|Warsaw|).
+				\item Things between \verb|\begin{frame}| and \verb|\end{frame}| makes one slide.
+				\item \verb|\pause| tells \LaTeX\ to put the content afterwards to a following page.			
+				\item You may insert figures or tables as what you do in an article (as I have demonstrated in the second frame of this example).
+			\end{itemize}
+		\end{minipage}
+\end{longtable}
+\newpage
+
+\section{Knitr}
+
+\paragraph{Motivation} Knitr is a handy tool for reproducible research. It allows you to mix your R code and output with your report or paper written in \LaTeX. If you are following the recent LaCour (2014) scandal in our field, you may want to revisit this famous report that uncovers the fraud (Brookman et al. 2015, accesible from: \url{http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf}). It is quite obvious that the report is generated by Knitr, which allows the authors demonstrate to the readers how they detect the fraud from the data. For our prospective study, a considerable number of methods courses require writing homework with \LaTeX.
+
+\paragraph{Editors} RStudio is a good editor for knitr. However, its disadvantage compared to TeXstudio is that it does not automatically fill your \TeX\ command.
+
+\paragraph{Setup I: Install the ``knitr'' package} You may type in the console \verb|install.packages(``knitr'')| and press ``ENTER''. Or you may use the menu ``Tools'' $\rightarrow$ ``install packages'' and type ``knitr'' in the pop-up window.
+
+\paragraph{Setup II: Change setting} Enter the Preference Setting of RStudio (``Global Options'' for Windows users, ``Preferences'' for Mac users). Go to the ``Sweave'' tab at the left panel. Choose ``Weave Rnw files using \textbf{knitr}''.
+
+\paragraph{Create a knitr doc} To create, press ``New File'' $\rightarrow$ ``R Sweave''. You will get a new windows with a file with the extension \verb|.Rnw|. 
+
+\paragraph{Adding R code chuncks} In a knitr document, you indicate the start of a R code chunck with ``\verb|<<>>=|'' and its end with ``\verb|@|''. A sample knitr document including simple R code that print the value of a variable and plot a scatter plot is shown as below:
+\begin{code}
+\documentclass{article}
+
+\begin{document}
+Below I calculate and print the value of $a = 1 + 1$
+  	
+<<>>=
+a = 1 + 1
+print(a)
+@
+
+Below I draw a scatter plot of five points $(1, 1), (2, 2), (3, 3), (4, 4)$
+
+<<>>=
+plot(x = 1:4, y = 1:4)
+@
+
+\end{document}
+\end{code}
+
+\paragraph{Options} You may specify some options for your R chunks: name of the chunck, show/ hide the code (\verb|echo=|), how to output the result (\verb|results=|), whether to run the code (\verb|eval=|), the height and width of a graph (for instance, \verb|fig.height = 4|, \verb|fig.height= 4|). Examine how the output of the following chuncks differ when I change the options.
+
+\begin{code}
+<<>>=
+a = 1 + 1
+print(a)
+plot(x = 1:4, y = 1:4)
+@
+
+<<eval=FALSE>>=
+a = 1 + 1
+print(a)
+plot(x = 1:4, y = 1:4)
+@
+
+<<echo=FALSE>>=
+a = 1 + 1
+print(a)
+plot(x = 1:4, y = 1:4)
+@
+
+<<fig.height=3, fig.width=4>>=
+a = 1 + 1
+print(a)
+plot(x = 1:4, y = 1:4)
+@
+\end{code}
+
+Above is a demonstration of frequently-used options, for more, visit the website of the package author: \url{http://yihui.name/knitr/options/#chunk_options}.
+
+\section{LyX}
+
+LyX is a user-friendly \TeX word processing software. If you would like to write on \LaTeX without having to worry to much about its syntax, this is what you may try. LyX is downloadable from \url{http://www.lyx.org/} and a considerable number of tutorials are online.
+
+\newpage
+
+\section{Resources}
+You may find the following resources useful when you work on \LaTeX:
+\begin{itemize}
+	\item To have a better understanding on the 'big picture' of \LaTeX, you may use one of the following textbooks:
+	\begin{itemize}
+		\item \textit{The No So Short Introduction to \LaTeXe} by Tobias Oetiker et al. Downloadable from \url{http://tobi.oetiker.ch/lshort/lshort.pdf}
+		\item \textit{The Art of LaTeX} by Helin Gai. Downloadable from \url{http://www.math.ecnu.edu.cn/~latex/docs/Eng_doc/LaTeX_Manual_8_6.pdf}
+		\item If you would like to know more about how to type maths in \LaTeX, \textit{The \LaTeX\ Mathematics Companion} by Helin Gai is a good place to start. Downloadable from \url{http://hungrydummy.com/static/pdf/MathCompanion.pdf}
+	\end{itemize}
+	\item You may heavily draw on the following online resources as well:
+	\begin{itemize}
+		\item The \LaTeX\ page on Wikibook: \url{http://en.wikibooks.org/wiki/LaTeX}. Especially, its 'mathematics' page covers nearly all we need in our first-year methods class: \url{http://en.wikibooks.org/wiki/LaTeX/Mathematics}
+		\item Answers to specific questions on the forum \verb|stackoverflow| (\url{http://stackoverflow.com/}) and \verb|StackExchange| (\url{http://tex.stackexchange.com/}) are usually reliable. Try the answers with the highest vote.
+	\end{itemize}
+
+	\item Drawing Graphs with package \verb|TikZ|
+	\begin{itemize}
+		\item To draw scientific graphs, check out \verb|Pgfplot|. Tutorials and examples are available on \url{https://www.sharelatex.com/learn/Pgfplots_package}. 
+		\item The package is a handy tool for game trees as well (you may use it for your Game Theory assignments). Here is a tutorial with good examples: \url{http://www.sfu.ca/~haiyunc/notes/Game_Trees_with_TikZ.pdf}
+		\item More generally, see the following page for examples of graphs that \verb|TikZ| can draw: \url{http://www.texample.net/tikz/examples/tag/graphs/}
+	\end{itemize}
+\end{itemize}
+
+\vspace{10mm}
+
+\textbf{Enjoy! Thank you!}
+
+
+
+\end{document}
